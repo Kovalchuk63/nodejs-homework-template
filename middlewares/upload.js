@@ -1,34 +1,18 @@
 import multer from "multer";
 import path from "path";
 
-import { HttpError } from "../helpers/index.js";
+const tempDir = path.resolve("temp");
 
-const destination = path.resolve("temp");
-
-const storage = multer.diskStorage({
-  destination,
-  filename: (req, file, callback) => {
-    const uniquePreffix = `${Date.now()}_${Math.round(Math.random() * 1e9)}`;
-    const filename = `${uniquePreffix}_${file.originalname}`;
-    callback(null, filename);
+const multerConfig = multer.diskStorage({
+  destination: tempDir,
+  filename: (req, file, cb) => {
+    // const uniquePrefix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, file.originalname);
   },
 });
 
-const limits = {
-  fileSize: 1024 * 1024 * 5,
-};
-
-// eslint-disable-next-line no-unused-vars
-const fileFilter = (req, file, callback) => {
-  const extention = req.originalname.split(".").pop();
-  if (extention === "exe") {
-    callback(HttpError(400, ".exe not valid extention"));
-  }
-};
-
 const upload = multer({
-  storage,
-  limits,
+  storage: multerConfig,
 });
 
 export default upload;

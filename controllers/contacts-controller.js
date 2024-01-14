@@ -1,6 +1,10 @@
+import fs from "fs/promises";
+import path from "path";
 import Contact from "../models/contacts/index.js";
 import { HttpError } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
+
+const avatarPath = path.resolve("public", "avatars");
 
 const getAllContacts = async (req, res) => {
   const { _id: owner } = req.user;
@@ -63,7 +67,7 @@ const updateById = async (req, res) => {
 
 const updateFavoriteById = async (req, res) => {
   const { id } = req.params;
-  const existingContact = await Contact.findByIdAndUpdate(id);
+  const existingContact = await Contact.findByIdAndUpdate({ id, owner });
   if (!existingContact) {
     throw HttpError(404, "Contact was not found");
   }
