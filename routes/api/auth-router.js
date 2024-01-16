@@ -24,8 +24,6 @@ authRouter.post(
   authController.signin
 );
 
-upload;
-
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.signout);
