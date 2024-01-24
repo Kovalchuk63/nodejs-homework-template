@@ -13,11 +13,27 @@ const nodemailerConfig = {
   },
 };
 
-const tranport = nodemailer.createTransport(nodemailerConfig);
+const transport = nodemailer.createTransport(nodemailerConfig);
 
 const sendEmail = (data) => {
   const email = { ...data, from: UKR_NET_FROM };
-  return tranport.sendMail(email);
+  return transport.sendMail(email);
 };
 
 export default sendEmail;
+
+//const email = {
+//    to: "tourus81@gmail.com",
+//    from: UKR_NET_FROM,
+//    subject: "Test",
+//    html: "<p> It is working</p>",
+// };
+
+//const sendEmail = async () => {
+//   try {
+//     await transport.sendMail(email);
+//     console.log("Email sent successfully");
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
